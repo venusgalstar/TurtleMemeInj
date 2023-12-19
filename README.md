@@ -1,4 +1,4 @@
-# TRTL Basic
+# Injective-TRTL-Token
 
 This is a basic implementation of a TRTL token contract. It is designed to
 be deployed as is, or imported into other contracts to easily build
