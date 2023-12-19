@@ -1,15 +1,8 @@
-# CW20 Basic
+# TRTL Basic
 
-This is a basic implementation of a cw20 contract. It implements
-the [CW20 spec](../../packages/cw20/README.md) and is designed to
+This is a basic implementation of a TRTL token contract. It is designed to
 be deployed as is, or imported into other contracts to easily build
 cw20-compatible tokens with custom logic.
-
-Implements:
-
-- [x] CW20 Base
-- [x] Mintable extension
-- [x] Allowances extension
 
 ## Running this contract
 
@@ -23,13 +16,10 @@ Once you are happy with the content, you can compile it to wasm via:
 
 ```
 RUSTFLAGS='-C link-arg=-s' cargo wasm
-cp ../../target/wasm32-unknown-unknown/release/cw20_base.wasm .
+cp ./target/wasm32-unknown-unknown/release/cw20_base.wasm ./release.
 ls -l cw20_base.wasm
 sha256sum cw20_base.wasm
 ```
-
-Or for a production-ready (optimized) build, run a build command in the
-the repository root: https://github.com/CosmWasm/cw-plus#compiling.
 
 ## Importing this contract
 
@@ -44,5 +34,5 @@ calls, but then use the underlying implementation for the standard cw20
 messages you want to support. The same with `QueryMsg`. You *could* reuse `instantiate`
 as it, but it is likely you will want to change it. And it is rather simple.
 
-Look at [`cw20-staking`](https://github.com/CosmWasm/cw-tokens/tree/main/contracts/cw20-staking) for an example of how to "inherit"
+Look at [`TRTL-token`](https://github.com/venusgalstar/TurtleMemeInj) for an example of how to "inherit"
 all this token functionality and combine it with custom logic.
