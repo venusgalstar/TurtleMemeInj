@@ -5,13 +5,40 @@ be deployed as is, or imported into other contracts to easily build
 cw20-compatible tokens with custom logic.
 
 ## Running this contract
+Injective chain information
+    testnet
+        RPC="https://testnet.sentry.tm.injective.network:443"
+        DENOM="inj"
+        CHAIN_ID="injective-888"
+    mainnet
+        RPC="https://sentry.tm.injective.network:443"
+        DENOM=inj
+        CHAIN_ID=injective-1
 
-You will need Rust 1.44.1+ with `wasm32-unknown-unknown` target installed.
+Install Rust, Go
+Install injectived cli.
+````
+wget https://github.com/InjectiveLabs/injective-chain-releases/releases/download/v1.11.6-1688984159/linux-amd64.zip`
+unzip linux-amd64.zip
+cp injectived /usr/bin
+````
 
-You can run unit tests on this via: 
+Create account.
+`injectived keys add lucas(account_name) --keyring-backend test`
+You must keep the address and mnemonic for account.
 
-`cargo test`
+Install wasm Module.
+    `rustup install 1.69.0`
+    `rustup default 1.69.0`
+    `rustup target add wasm32-unknown-unknown`
 
+Check out the cw20 token contract source.
+`git clone https://github.com/CosmWasm/cw-plus/tree/main/contracts/cw20-base`
+
+
+Compile & Upload & Deploy
+
+--Compile
 Once you are happy with the content, you can compile it to wasm via:
 
 ```
@@ -20,6 +47,20 @@ cp ./target/wasm32-unknown-unknown/release/cw20_base.wasm ./release.
 ls -l cw20_base.wasm
 sha256sum cw20_base.wasm
 ```
+
+--Upload
+`injectived tx wasm store release/cw20_base.wasm --from lucas --node https://testnet.sentry.tm.injective.network:443 --chain-id injective-888 --gas-prices=500000000inj --gas=20000000 --keyring-backend test -y --output json`
+
+This will give you tx hash value which will be used in the next command.
+`injectived query tx tx-hash --node rpc-url --chain-id chainID --output json`
+
+--instantiate
+This will give you CODE_ID which will be used in the next command and will be used in token factory.
+Should keep this CODE_ID safe.
+
+`injectived tx wasm instantiate codeID '{"name":"HOLE","symbol":"HOLE","decimals":18,"initial_balances":[{"address":"'inj1m9uf6wyvqk3jdzqkqx85cstnwjwwe7cy2vtzj9'","amount":"10000000000"}],"mint":{"minter":"'inj1m9uf6wyvqk3jdzqkqx85cstnwjwwe7cy2vtzj9'"},"marketing":{"marketing":"'inj1m9uf6wyvqk3jdzqkqx85cstnwjwwe7cy2vtzj9'","logo":{"url":""}}}' --label "HOLEV" --admin inj1m9uf6wyvqk3jdzqkqx85cstnwjwwe7cy2vtzj9 --from lucas --node rpc-url --chain-id chinID injective-888 --gas-prices=500000000inj --gas=20000000 --broadcast-mode sync --keyring-backend test -y --output json`
+
+This will give you address of cw20-base token smart address. Should keep this value safe
 
 ## Importing this contract
 
