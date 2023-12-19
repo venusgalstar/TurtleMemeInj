@@ -62,6 +62,11 @@ Should keep this CODE_ID safe.
 
 This will give you address of cw20-base token smart address. Should keep this value safe
 
+Upload the token logo
+`injectived tx wasm instantiate codeID '{"name":"HOLE","symbol":"HOLE","decimals":18,"initial_balances":[{"address":"'inj1m9uf6wyvqk3jdzqkqx85cstnwjwwe7cy2vtzj9'","amount":"10000000000"}],"mint":{"minter":"'inj1m9uf6wyvqk3jdzqkqx85cstnwjwwe7cy2vtzj9'"},"marketing":{"marketing":"'inj1m9uf6wyvqk3jdzqkqx85cstnwjwwe7cy2vtzj9'","logo":{"url":"Logo_URL"}}}' --label "HOLEV" --admin inj1m9uf6wyvqk3jdzqkqx85cstnwjwwe7cy2vtzj9 --from lucas --node rpc-url --chain-id chinID injective-888 --gas-prices=500000000inj --gas=20000000 --broadcast-mode sync --keyring-backend test -y --output json`
+Or
+`injectived tx wasm execute "contract address" '{"upload_logo": {"url": "Logo_URL"}}' --from lucas --node rpc-url --chain-id chinID injective-888 --gas-prices=500000000inj --gas=20000000 --broadcast-mode sync --keyring-backend test -y --output json`
+
 ## Importing this contract
 
 You can also import much of the logic of this contract to build another
